@@ -13,12 +13,16 @@
     "url": "https://github.com/reactjs/react-redux.git"
   },
   "files": [],
+  "main": "./build/index.js",
   "keywords": [
     "react",
     "reactjs",
     "backbone"
   ],
-  "author": "",
+  "author": {
+    "name": "Tom Lei",
+    "email": "tom.lei@beanworks.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": ""
@@ -38,7 +42,11 @@
     "react-test-renderer": "^15.5.4",
     "regenerator-runtime": "^0.10.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^15.0.0",
+    "backbone": "^1.0.0",
+    "lodash": "^4.17.4"
+  },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
     "backbone": "^1.0.0"
