@@ -1,0 +1,13 @@
+engines:
+    eslint:
+        enabled: true
+    fixme:
+        enabled: true
+
+exclude_paths:
+- "src/__tests__/*"
+- "index.js"
+
+ratings:
+   paths:
+   - "src/index.js"

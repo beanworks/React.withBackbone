@@ -1,7 +1,6 @@
 {
   "presets": [
     "react",
-    "babili",
     "es2015"
   ]
 }
