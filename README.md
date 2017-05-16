@@ -1,5 +1,12 @@
-# withBackbone
-React Higher Order Component which will bind Backbone Data that works with React 16.0
+# WithBackbone
+**React Higher Order Component which will bind Backbone Data that works with React Fiber (v.16)**
+
+[![NPM](https://nodei.co/npm/with-backbone.png)](https://nodei.co/npm/with-backbone/)
+
+
+[![Code Climate](https://codeclimate.com/github/beanworks/withBackbone/badges/gpa.svg)](https://codeclimate.com/github/beanworks/withBackbone)
+[![Test Coverage](https://codeclimate.com/github/beanworks/withBackbone/badges/coverage.svg)](https://codeclimate.com/github/beanworks/withBackbone/coverage)
+![CI Status](https://travis-ci.org/beanworks/withBackbone.svg?branch=master)
 
 ## Why did we make it
 There are already a couple of mixins or components that will link you Backbone model or collection with React, but with the introduction of [React Fiber (16.0)](https://facebook.github.io/react/blog/2017/04/07/react-v15.5.0.html), the `React.createClass` syntax will be deprecated which would suggest mixins are no longer a way to go, thus we've reinvented the wheel once again and created *withBackbone*.
