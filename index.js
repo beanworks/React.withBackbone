@@ -37,9 +37,10 @@ function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-Set.prototype.nonIntersect = function (setB) {
-    var presentOnlyInA = new Set(this);
+function getNonIntersectIn(setA, setB) {
+    var presentOnlyInA = new Set(setA);
     var presentOnlyInB = new Set(setB);
+
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -48,7 +49,7 @@ Set.prototype.nonIntersect = function (setB) {
         for (var _iterator = presentOnlyInB[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var elem = _step.value;
 
-            if ([].concat(_toConsumableArray(this)).indexOf(elem) !== -1) {
+            if ([].concat(_toConsumableArray(presentOnlyInA)).indexOf(elem) !== -1) {
                 presentOnlyInB.delete(elem);
                 presentOnlyInA.delete(elem);
             }
@@ -69,7 +70,7 @@ Set.prototype.nonIntersect = function (setB) {
     }
 
     return [presentOnlyInA, presentOnlyInB];
-};
+}
 
 var withBackbone = function withBackbone(WrappedComponent) {
     var WithBackbone = function (_React$Component) {
@@ -164,15 +165,15 @@ var withBackbone = function withBackbone(WrappedComponent) {
                 var newSetOfModels = this.getSetOfBackbone(nextProps, _backbone2.default.Model);
                 var newSetOfCollections = this.getSetOfBackbone(nextProps, _backbone2.default.Collection);
 
-                var _setOfModels$nonInter = this.setOfModels.nonIntersect(newSetOfModels),
-                    _setOfModels$nonInter2 = _slicedToArray(_setOfModels$nonInter, 2),
-                    modelsToUnsubscribe = _setOfModels$nonInter2[0],
-                    modelsToSubscribe = _setOfModels$nonInter2[1];
+                var _getNonIntersectIn = getNonIntersectIn(this.setOfModels, newSetOfModels),
+                    _getNonIntersectIn2 = _slicedToArray(_getNonIntersectIn, 2),
+                    modelsToUnsubscribe = _getNonIntersectIn2[0],
+                    modelsToSubscribe = _getNonIntersectIn2[1];
 
-                var _setOfCollections$non = this.setOfCollections.nonIntersect(newSetOfCollections),
-                    _setOfCollections$non2 = _slicedToArray(_setOfCollections$non, 2),
-                    collectionsToUnsubscribe = _setOfCollections$non2[0],
-                    collectionsToSubscribe = _setOfCollections$non2[1];
+                var _getNonIntersectIn3 = getNonIntersectIn(this.setOfCollections, newSetOfCollections),
+                    _getNonIntersectIn4 = _slicedToArray(_getNonIntersectIn3, 2),
+                    collectionsToUnsubscribe = _getNonIntersectIn4[0],
+                    collectionsToSubscribe = _getNonIntersectIn4[1];
 
                 this.subscribeTo(this.modelListener, modelsToSubscribe, 'change');
                 this.subscribeCollection(this.collectionListener, collectionsToSubscribe);

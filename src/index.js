@@ -2,24 +2,23 @@ import React from 'react';
 import _ from 'lodash';
 import Backbone from 'backbone';
 
-
-
 function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-Set.prototype.nonIntersect = function(setB) {
-    let presentOnlyInA = new Set(this);
-    let presentOnlyInB = new Set(setB);
+function getNonIntersectIn(setA, setB) {
+    const presentOnlyInA = new Set(setA);
+    const presentOnlyInB = new Set(setB);
+    
     for (const elem of presentOnlyInB) {
-        if ([...this].indexOf(elem) !== -1) {
+        if ([...presentOnlyInA].indexOf(elem) !== -1) {
             presentOnlyInB.delete(elem);
             presentOnlyInA.delete(elem);
         }
     }
 
     return [presentOnlyInA, presentOnlyInB];
-};
+}
 
 const withBackbone = (WrappedComponent) => {
     class WithBackbone extends React.Component {
@@ -78,8 +77,8 @@ const withBackbone = (WrappedComponent) => {
             const newSetOfModels = this.getSetOfBackbone(nextProps, Backbone.Model);
             const newSetOfCollections = this.getSetOfBackbone(nextProps, Backbone.Collection);
 
-            const [modelsToUnsubscribe, modelsToSubscribe] = this.setOfModels.nonIntersect(newSetOfModels);
-            const [collectionsToUnsubscribe, collectionsToSubscribe] = this.setOfCollections.nonIntersect(newSetOfCollections);
+            const [modelsToUnsubscribe, modelsToSubscribe] = getNonIntersectIn(this.setOfModels, newSetOfModels);
+            const [collectionsToUnsubscribe, collectionsToSubscribe] = getNonIntersectIn(this.setOfCollections, newSetOfCollections);
 
             this.subscribeTo(this.modelListener, modelsToSubscribe, 'change');
             this.subscribeCollection(this.collectionListener, collectionsToSubscribe);
