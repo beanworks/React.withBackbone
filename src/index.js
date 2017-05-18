@@ -1,6 +1,6 @@
-import React from 'react';
-import _ from 'lodash';
+import React    from 'react';
 import Backbone from 'backbone';
+import debounce from 'lodash.debounce';
 
 function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -25,22 +25,18 @@ const withBackbone = (WrappedComponent) => {
         constructor(props) {
             super(props);
 
-            this.modelListener = new Object();
-            _.extend(this.modelListener, Backbone.Events);
+            this.modelListener = Object.assign({}, Backbone.Events);
             this.setOfModels = this.getSetOfBackbone(props, Backbone.Model);
             this.subscribeTo(this.modelListener, this.setOfModels, 'change');
 
-            this.collectionListener = new Object();
-            _.extend(this.collectionListener, Backbone.Events);
+            this.collectionListener = Object.assign({}, Backbone.Events);
             this.setOfCollections = this.getSetOfBackbone(props, Backbone.Collection);
             this.subscribeCollection(this.collectionListener, this.setOfCollections);
 
-            this.debouncedForceUpdate = _.debounce(this.forceUpdateWrapper, 0);
-
+            this.debouncedForceUpdate = debounce(this.forceUpdateWrapper, 0);
         }
 
         forceUpdateWrapper() {
-            //console.log('Force Updating ', getDisplayName(WrappedComponent));
             this.forceUpdate();
         }
 
@@ -70,7 +66,7 @@ const withBackbone = (WrappedComponent) => {
         unsubscribeFrom(listener, setOfObj) {
             setOfObj.forEach((obj) => {
                 listener.stopListening(obj);
-        });
+            });
         }
 
         componentWillReceiveProps(nextProps) {
@@ -97,12 +93,10 @@ const withBackbone = (WrappedComponent) => {
 
         render() {
             return (
-                <WrappedComponent ref={(wrappedComponent) => {
-                this.wrappedComponent = wrappedComponent;
-            }
-        }
-            {...this.props}/>
-        );
+                <WrappedComponent ref={(wrappedComponent) => {this.wrappedComponent = wrappedComponent}}
+                    {...this.props}
+                />
+            );
         }
     }
 
